@@ -1,139 +1,118 @@
 /*global $*/
 
 let playerTurn=0;
-let playerString="";
+let playerString="X";
 let check=true;
 
-let one=$("#tile1").text();
-let two=$("#tile2").text();
-let three=$("#tile3").text();
-let four=$("#tile4").text();
-let five=$("#tile5").text();
-let six=$("#tile6").text();
-let seven=$("#tile7").text();
-let eight=$("#tile8").text();
-let nine=$("#tile9").text();
 
 $("#button1").click( function() {
-    console.log(10%3);
-  
-    playerString=round(playerTurn);
     performLogic("#button1","#tile1");
-    playerTurn++;  
-    row(one, two, three, four, five, six, seven, eight, nine);
-    endGmae(playerTurn,check);
 });
 
 $("#button2").click( function() {
-    
-    playerString=round(playerTurn);
     performLogic("#button2","#tile2");
-    playerTurn++;
-    endGmae(playerTurn,check);
 });
 
 $("#button3").click( function() {    
-   
-    playerString=round(playerTurn);
     performLogic("#button3","#tile3");
-    playerTurn++; 
-    endGmae(playerTurn,check);
 });
 
 $("#button4").click( function() {
-   
-    playerString=round(playerTurn);
     performLogic("#button4","#tile4");
-    playerTurn++;
-    endGmae(playerTurn,check);
 });
 
 $("#button5").click( function() {
-   
-    playerString=round(playerTurn);
     performLogic("#button5","#tile5");
-    playerTurn++; 
-    endGmae(playerTurn,check);
 });
 
 $("#button6").click( function() {
-    
-    playerString=round(playerTurn);
     performLogic("#button6","#tile6");
-    playerTurn++;
-    endGmae(playerTurn,check);
 });
 
 $("#button7").click( function() {
-    
-    playerString=round(playerTurn);
     performLogic("#button7","#tile7");
-    playerTurn++;
-    endGmae(playerTurn,check);
 });
 
 $("#button8").click( function() {
-    
-    playerString=round(playerTurn);
     performLogic("#button8","#tile8");
-    playerTurn++;
-    endGmae(playerTurn,check);
 });
 
 $("#button9").click( function() {
-   
-    playerString=round(playerTurn);
     performLogic("#button9","#tile9");
-    playerTurn++; 
-    endGmae(playerTurn,check);
 });
 
 function performLogic(buttonId, tileId) {
-    $(buttonId).hide();
-    $(tileId).text(playerString);
+        $(buttonId).hide();
+        $(tileId).text(playerString);
+    
+     playerString=round(playerString);
+    
+    let one=$("#tile1").text();
+    let two=$("#tile2").text();
+    let three=$("#tile3").text();
+    let four=$("#tile4").text();
+    let five=$("#tile5").text();
+    let six=$("#tile6").text();
+    let seven=$("#tile7").text();
+    let eight=$("#tile8").text();
+    let nine=$("#tile9").text();
+    
+    playerTurn++; 
+    win(one, two, three, four, five, six, seven, eight, nine);
+    endGmae(playerTurn,check);
+    
 }
 
-function round(playerNum) { 
-    if((playerNum%2)!==0){
-        playerString="O";
-    }else if(playerNum%2===0){
-        playerString="X";
+function round(player) { 
+    if(player==="X"){
+       return player="O";
+    }else if(player==="O"){
+        return player="X";
     }
-        return playerString;
+        return player;
 }
 
 function endGmae(playerNum,draw) {
     if(playerNum>=9) {
-        $("h2").text("Draw");
+       alert("Draw");
        return draw=false;
     }else{
        return draw=true;
     }
 }
 
-function row(first, second, third, forth, fifth, sixth, seventh, eighth, ninth) {
-    if(first===second===third) {
-        $("#judge").text(playerString+ " Win");
-    }else if(forth===fifth===sixth) {
-        $("#judge").text(playerString+ " Win");
-    }else if(seventh===eighth===ninth) {
-        $("#judge").text(playerString+ " Win");
+function win(first, second, third, forth, fifth, sixth, seventh, eighth, ninth) {
+    if(first===second && second===third && (first ==="X" || first==="O")) {
+        alert(playerString+ " Win");
+        return false;
     }
-}
-
-function column(first, second, third, forth, fifth, sixth, seventh, eighth, ninth) {
-    if(first===forth===seventh) {
-        $("#judge").text(playerString+ " Win");
-    }else if(second===fifth===eighth) {
-        $("#judge").text(playerString+ " Win");
-    }else if(third===sixth===ninth) {
-        $("#judge").text(playerString+ " Win");
+    if(forth===fifth && fifth===sixth && (forth ==="X" || forth==="O")) {
+      alert(playerString+ " Win");
+        return false;
     }
-}
-function cross(first, second, third, forth, fifth, sixth, seventh, eighth, ninth) {
-    if(first===fifth===ninth) {
-        $("#judge").text(playerString+ " Win");
-    }else if(third===fifth===seventh) {
-        $("#judge").text(playerString+ " Win");
+    if(seventh===eighth && eighth===ninth && (seventh==="X" || seventh==="O")) {
+        alert(playerString+ " Win");
+        return false;
     }
+    if(first===forth && first===seventh && (first==="X" || first==="O")) {
+      alert(playerString+ " Win");
+        return false;
+    }
+    if(second===fifth && second===eighth && (second==="X" || second==="O")) {
+      alert(playerString+ " Win");
+        return false;
+    }
+    if(third===sixth && third===ninth && (third ==="X" || third==="O")) {
+      alert(playerString+ " Win");
+        return false;
+    }
+    if(first===fifth && first===ninth && (first ==="X" || first==="O")) {
+      alert(playerString+ " Win");
+        return false;
+    }
+    if(third===fifth && third===seventh && (third ==="X" || third==="O")) {
+      alert(playerString+ " Win");
+        return false;
+    }
+        return true;
 }
