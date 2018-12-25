@@ -2,7 +2,7 @@
 
 let playerTurn=0;
 let playerString="X";
-let check=true;
+
 
 
 $("#button1").click( function() {
@@ -44,9 +44,7 @@ $("#button9").click( function() {
 function performLogic(buttonId, tileId) {
         $(buttonId).hide();
         $(tileId).text(playerString);
-    
-     playerString=round(playerString);
-    
+          
     let one=$("#tile1").text();
     let two=$("#tile2").text();
     let three=$("#tile3").text();
@@ -57,29 +55,39 @@ function performLogic(buttonId, tileId) {
     let eight=$("#tile8").text();
     let nine=$("#tile9").text();
     
-    playerTurn++; 
+    endGame(playerTurn);
     win(one, two, three, four, five, six, seven, eight, nine);
-    endGmae(playerTurn,check);
     
+     if(endGame(playerTurn)===false) {
+         $(".container").hide();
+         $("body").css("background-image","url(http://p4.i.ntere.st/8bc385b21cc17a82baf294de0c405d99_480.jpg)");     
+    }else if(win(one, two, three, four, five, six, seven, eight, nine)===false) {
+        $(".container").hide();
+        $("body").css("background-image","url(http://s9.sinaimg.cn/middle/6db91978x9a417e277f98&690)");
+    }
+    
+        playerTurn++; 
+        playerString=round(playerString,playerTurn);
+       
 }
 
-function round(player) { 
-    if(player==="X"){
+function round(player,round) { 
+    if(round%2===0){
+       return player="X";
+    }else if(player%2!==0){
        return player="O";
-    }else if(player==="O"){
-        return player="X";
     }
         return player;
 }
 
-function endGmae(playerNum,draw) {
+function endGame(playerNum) {
     if(playerNum>=9) {
-       alert("Draw");
-       return draw=false;
-    }else{
-       return draw=true;
+        alert("Draw");
+        return false;
     }
+        return true;
 }
+
 
 function win(first, second, third, forth, fifth, sixth, seventh, eighth, ninth) {
     if(first===second && second===third && (first ==="X" || first==="O")) {
